@@ -191,7 +191,6 @@ module.exports = function(grunt) {
 
   grunt.registerTask('debug', function() {
     grunt.task.run([
-      'clean:debug',
       'compass:build',
       'css',
       'copy:font',
@@ -200,7 +199,8 @@ module.exports = function(grunt) {
       'jade:pages',
       'jade:modules',
       'jade:index',
-      // 'docs'
+      'min',
+      'cssmin',
     ]);
   });
 
