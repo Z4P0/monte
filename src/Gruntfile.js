@@ -197,16 +197,12 @@ module.exports = function(grunt) {
       'copy:font',
       'copy:js',
       'js',
-      'jade:debug_pages',
+      'jade:pages',
       'jade:modules',
       'jade:index',
       // 'docs'
     ]);
   });
-
-
-  // ----------------------------
-  // can be module specfic, ex. grunt html:article-view
 
 
   // compile SCSS changes
@@ -247,27 +243,6 @@ module.exports = function(grunt) {
 
     grunt.config('copy.module_js.files', modules);
     grunt.task.run('copy:module_js');
-  });
-
-
-
-  // copy assets from modules
-  grunt.registerTask('assets', 'copy assets from modules', function(module) {
-    module = module || '**';
-    var mode = grunt.option('deploy') ? 'deploy' : 'debug';
-
-    grunt.file.expand('modules/'+module+'/img').forEach(function(path) {
-      mod = path.split('/')[1];
-      grunt.registerTask(path, function() {
-        // configure
-        grunt.config('copy:module_img.files.cwd', path);
-        grunt.config('copy:module_img.files.dest', '../build/debug/img/'+mod+'/');
-
-        // run
-        grunt.task.run('copy:module_img');
-      })
-      grunt.task.run(path);
-    });
   });
 
 
