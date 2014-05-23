@@ -1,6 +1,12 @@
-// var hawthorne = {}; //global var
+'use strict';
+var z = z || {};
 
-//wait until main document is loaded
-window.addEventListener('load',function(){
-  console.log('DOMLoaded');
-}); //end addEventListener
+z.main = {
+	init: function() {
+		console.log('hello from: main.js');
+	}
+};
+
+window.onload = function() {
+	z.main.init();
+}
