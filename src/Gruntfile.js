@@ -1,5 +1,7 @@
 module.exports = function(grunt) {
 
+  var buildFolder = '../build/';
+
   var jadedebug = {
     compileDebug: false,
     pretty: true,
@@ -46,24 +48,21 @@ module.exports = function(grunt) {
       build: {
         options: {
           sassDir: 'style',
-          cssDir: '../build/debug/style',
+          cssDir: buildFolder+'style',
           outputStyle: 'expanded',
           noLineComments: true,
           force: true,
           relativeAssets: true,
-          images: '../build/debug/img',
-          environment: 'development'
         }
       },
-      modules: {
+      deploy: {
         options: {
-          cssDir: '../build/debug/style/modules',
-          outputStyle: 'expanded',
+          sassDir: 'style',
+          cssDir: buildFolder+'style',
+          outputStyle: 'compressed',
           noLineComments: true,
           force: true,
           relativeAssets: true,
-          images: '../build/debug/img',
-          environment: 'development'
         }
       }
     },
@@ -71,28 +70,14 @@ module.exports = function(grunt) {
 
     // copy files (font, img, js)
     copy: {
-      font: {
-        files: [{expand: true, cwd: 'style/fonts', src:['**'], dest: '../build/debug/style/fonts'}]
+      fonts: {
+        files: [{expand: true, cwd: 'style/fonts', src:['**'], dest: buildFolder+'style/fonts'}]
       },
       img: {
-        files : [{expand: true, cwd: 'img', src: ['**'], dest: '../build/debug/img'}]
+        files : [{expand: true, cwd: 'img', src: ['**'], dest: buildFolder+'img'}]
       },
       js: {
-        files : [{expand: true, cwd: 'js', src: ['**'], dest: '../build/debug/js'}]
-      },
-      module_js: {
-        files: [{expand: true, cwd: 'modules', src: ['**/js/*.js'], dest: '../build/debug/js/modules/'}]
-        // go through every module folder
-        // files : function() {
-        //   var module, array = [];
-
-        //   // copy all js
-        //   grunt.file.expand('modules/**/js').forEach(function(path) {
-        //     module = path.split('/')[1];
-        //     array.push({expand: true, cwd: path, src: ['**'], dest: '../build/debug/js/modules/'});
-        //   });
-        //   return array;
-        // }
+        files : [{expand: true, cwd: 'js', src: ['**'], dest: buildFolder+'js'}]
       }
     },
 
@@ -101,72 +86,47 @@ module.exports = function(grunt) {
     jade: {
       index: {
         options: jadedebug,
-        files: [{expand: true, cwd: './', src: ['*.jade'], dest: '../build/debug', ext: '.html', flatten: true }]
-      },
-      modules: {
-        options: jadedebug,
-        files: [
-          {expand: true, cwd: 'modules', src: '**/demo/*.jade', dest: '../build/debug', ext: '.html', flatten: true }
-        ]
-      },
-      pages: {
-        options: jadedebug,
-        files: [{expand: true, cwd: 'pages', src: '*.jade', dest: '../build/debug', ext: '.html', flatten: true}]
+        files: [{expand: true, cwd: './', src: ['*.jade'], dest: buildFolder, ext: '.html', flatten: true }]
       }
     },
 
 
     // watch file changes
     watch: {
-      base_sass: {
+      sass: {
         files: ['style/*.scss','style/**/*.scss'],
         tasks: ['compass:build']
       },
-      module_sass: {
-        files: ['modules/**/style/*.scss'],
-        tasks: ['css']
-      },
-      base_jade: {
-        files: ['html/*.jade','*.jade'],
+      jade: {
+        files: ['*.jade'],
         tasks: ['jade:index']
       },
-      module_jade: {
-        files: ['modules/**/html/*.jade','modules/**/data/*.json'],
-        tasks: ['html']
-      },
-      base_img: {
-        files: ['img/*.*'],
+      img: {
+        files: ['img/*.*', 'img/**/*.*'],
         tasks: ['copy:img']
       },
-      module_img: {
-        files: ['modules/**/img/*.*'],
-        tasks: ['assets']
-      },
-      base_js:{
+      js:{
         files: ['js/*.js', 'js/**/*.js'],
         tasks: ['copy:js']
       },
-      module_js:{
-        files: ['modules/**/js/*.js'],
-        tasks: ['js']
-      },
-      pages: {
-        files: ['pages/*.jade'],
-        tasks: ['jade:pages']
+      fonts:
+      {
+        files: ['fonts/*.*'],
+        tasks: ['copy:fonts']
       }
-    },
+    }
 
     // yui compression
     min: {
       dist: {
-        src: ['../build/debug/js/main.js', '../build/debug/js/modules/*.js'],
-        dest: '../build/debug/js/main.min.js'
+        src: [buildFolder+'js/main.js', buildFolder+'js/modules/*.js'],
+        dest: buildFolder+'js/main.min.js'
       }
     },
     cssmin: {
       dist: {
-        src: ['../build/debug/style/style.css', '../build/debug/style/modules/*.css'],
-        dest: '../build/debug/style/style.min.css'
+        src: [buildFolder+'style/style.css', buildFolder+'style/modules/*.css'],
+        dest: buildFolder+'style/style.min.css'
       }
     }
 
@@ -192,58 +152,18 @@ module.exports = function(grunt) {
   grunt.registerTask('debug', function() {
     grunt.task.run([
       'compass:build',
-      'css',
-      'copy:font',
+      'copy:img',
       'copy:js',
-      'js',
-      'jade:pages',
-      'jade:modules',
+      'copy:fonts',
       'jade:index',
-      'min',
-      'cssmin',
     ]);
   });
 
-
-  // compile SCSS changes
-  grunt.registerTask('css', function(module) {
-    module = module || '**';
-    var mode = grunt.option('deploy') ? 'deploy' : 'debug';
-
-    // go through every module, or the one passed
-    grunt.file.expand('modules/'+module+'/style').forEach(function(path) {
-      grunt.registerTask(path, function() {
-        // set the sassDir for each module
-        grunt.config('compass.'+mode+'_modules.options.sassDir', path);
-        grunt.task.run('compass:'+mode+'_modules');
-      });
-
-      // run it
-      grunt.task.run(path);
-    });
+  grunt.registerTask('deploy', function() {
+    grunt.task.run([
+      'min',
+      'cssmin'
+    ]);
   });
-
-
-  // copy module JS
-  grunt.registerTask('js', function(module) {
-    module = module || '**';
-    var mode = grunt.option('deploy') ? 'deploy' : 'debug';
-    var modules = [];
-
-    // go through every module, or the one passed
-    grunt.file.expand('modules/'+module+'/js').forEach(function(path) {
-      mod = path.split('/')[1];
-      modules.push({
-        expand: true,
-        cwd: path,
-        src: ['*.js'],
-        dest: '../build/'+mode+'/js/modules'
-      });
-    });
-
-    grunt.config('copy.module_js.files', modules);
-    grunt.task.run('copy:module_js');
-  });
-
 
 };
