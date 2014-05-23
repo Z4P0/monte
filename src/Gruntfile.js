@@ -114,7 +114,7 @@ module.exports = function(grunt) {
         files: ['fonts/*.*'],
         tasks: ['copy:fonts']
       }
-    }
+    },
 
     // yui compression
     min: {
