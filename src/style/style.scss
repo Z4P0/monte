@@ -1,14 +1,7 @@
 // base styles
-@import "pieces/normalize";
 @import "pieces/vars";
 @import "pieces/mixins";
 @import "pieces/classes";
+@import "pieces/normalize";
 @import "pieces/base";
 @import "pieces/typography";
-
-// icon set
-// @import "font-awesome/font-awesome";
-
-body {
-  background: tomato;
-}
