@@ -1,9 +1,9 @@
 // wrapper - 80% width, 1024px max
 .wrapper {
-	position: relative;
-	width: 80%;
-	max-width: 1024px;
-	margin: 0 auto;
+  position: relative;
+  width: 80%;
+  max-width: 1024px;
+  margin: 0 auto;
 }
 
 
@@ -24,26 +24,26 @@
 
 // inline lists
 .inline li {
-	display: inline-block;
-	vertical-align: top;
+  display: inline-block;
+  vertical-align: top;
 }
 
 // for screen-readers
 // based off of styles in wordpress theme twentyeleven
 .assistive-text {
-	position:absolute !important;
-	clip:rect(1px 1px 1px 1px);
-	clip:rect(1px, 1px, 1px, 1px);
+  position:absolute !important;
+  clip:rect(1px 1px 1px 1px);
+  clip:rect(1px, 1px, 1px, 1px);
 }
 .assistive-text:active,
 .assistive-text:focus {
-	background:#eee;
-	border-bottom:1px solid #ddd;
-	color:#1982d1;
-	clip:auto !important;
-	font-size:12px;
-	position:absolute;
-	text-decoration:underline;
-	top:0;
-	left:7.6%;
+  background:#eee;
+  border-bottom:1px solid #ddd;
+  color:#1982d1;
+  clip:auto !important;
+  font-size:12px;
+  position:absolute;
+  text-decoration:underline;
+  top:0;
+  left:7.6%;
 }
