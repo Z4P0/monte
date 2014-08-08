@@ -4,11 +4,10 @@ my personal bootstrap
 
 ##### Requires npm
 
+```
 $ cd src/
 $ npm install
 $ grunt
+```
 
-
-
-$ cd ../build
-$
+The project will build into a build/ directory

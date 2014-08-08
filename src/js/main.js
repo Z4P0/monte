@@ -1,12 +1,11 @@
 'use strict';
-var z = z || {};
+var mtn = mtn || {};
 
-z.main = {
+window.onload = mtn.main.init;
+
+
+mtn.main = {
   init: function() {
     console.log('hello from: main.js');
   }
 };
-
-window.onload = function() {
-  z.main.init();
-}

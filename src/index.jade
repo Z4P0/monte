@@ -1,9 +1,12 @@
 include html/jade-helpers.jade
-!!! 5
+doctype html
 head
   title title
   meta(name="description", content="description")
-  include html/head.jade
+  include html/meta.jade
+  script(src="js/libs/modernizr.js")
+  link(rel="stylesheet", href="style/style.css")
+
 
 body#homepage
   a(href="#main", class="assistive-text") Skip to main content
@@ -12,5 +15,5 @@ body#homepage
       h1 title
       p &phi;
 
-  include html/foot.jade
+  include html/scripts.jade
 </html>

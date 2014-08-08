@@ -128,6 +128,40 @@ module.exports = function(grunt) {
         src: [buildFolder+'style/style.css', buildFolder+'style/modules/*.css'],
         dest: buildFolder+'style/style.min.css'
       }
+    },
+
+    htmlmin: {                                     // Task
+      dist: {                                      // Target
+        options: {                                 // Target options
+          removeComments: true,
+          collapseWhitespace: true
+        },
+        files: {                                   // Dictionary of files
+          'dist/index.html': 'src/index.html',     // 'destination': 'source'
+          'dist/contact.html': 'src/contact.html'
+        }
+      },
+      dev: {                                       // Another target
+        files: {
+          'dist/index.html': 'src/index.html',
+          'dist/contact.html': 'src/contact.html'
+        }
+      }
+    },
+
+
+    yuidoc: {
+      compile: {
+        name: '<%= pkg.name %>',
+        description: '<%= pkg.description %>',
+        version: '<%= pkg.version %>',
+        url: '<%= pkg.homepage %>',
+        options: {
+          paths: 'path/to/source/code/',
+          themedir: 'path/to/custom/theme/',
+          outdir: 'where/to/save/docs/'
+        }
+      }
     }
 
   });
@@ -140,7 +174,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-jade');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-yui-compressor');
+  // grunt.loadNpmTasks('grunt-yui-compressor');
 
 
 
