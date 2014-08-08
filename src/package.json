@@ -2,6 +2,7 @@
   "name": "monte",
   "description": "personal project bootstrap - zapo",
   "author": "luis rosario {zapo}",
+  "homepage": "http://www.luisrosar.io/projects/monte",
   "version": "0.0.3",
   "repository": {
     "type": "git",
