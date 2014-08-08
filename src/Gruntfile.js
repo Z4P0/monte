@@ -1,5 +1,11 @@
 module.exports = function(grunt) {
 
+  'use strict';
+
+  // Force use of Unix newlines
+  grunt.util.linefeed = '\n';
+
+
   var buildFolder = '../build/';
 
   var jadedebug = {
@@ -47,6 +53,7 @@ module.exports = function(grunt) {
 
     pkg: grunt.file.readJSON('package.json'),
 
+
     banner: '/*!\n' +
             ' * <%= pkg.name %> v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
             ' * Copyright 2013-<%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
@@ -67,6 +74,7 @@ module.exports = function(grunt) {
     },
 
 
+
     concat: {
       options: {
         banner: '<%= banner %>',
@@ -83,6 +91,7 @@ module.exports = function(grunt) {
     },
 
 
+
     uglify: {
       options: {
         preserveComments: 'some'
@@ -92,6 +101,7 @@ module.exports = function(grunt) {
         dest: buildFolder+'js/<%= pkg.name %>.min.js'
       }
     },
+
 
 
     autoprefixer: {
@@ -116,12 +126,14 @@ module.exports = function(grunt) {
     },
 
 
+
     csslint: {
       options: {
         csslintrc: 'style/.csslintrc'
       },
       src: [buildFolder+'style/<%= pkg.name %>.css']
     },
+
 
 
     cssmin: {
@@ -135,6 +147,7 @@ module.exports = function(grunt) {
         dest: buildFolder+'style/<%= pkg.name %>.min.css'
       }
     },
+
 
 
     usebanner: {
@@ -153,6 +166,7 @@ module.exports = function(grunt) {
     },
 
 
+
     csscomb: {
       options: {
         config: 'style/.csscomb.json'
@@ -164,11 +178,6 @@ module.exports = function(grunt) {
         dest: buildFolder+'style/'
       }
     },
-
-
-
-
-
 
 
 
@@ -197,6 +206,7 @@ module.exports = function(grunt) {
     },
 
 
+
     // copy files (font, img, js)
     copy: {
       fonts: {
@@ -211,6 +221,7 @@ module.exports = function(grunt) {
     },
 
 
+
     // compile jade files
     jade: {
       index: {
@@ -218,6 +229,7 @@ module.exports = function(grunt) {
         files: [{expand: true, cwd: './', src: ['*.jade'], dest: buildFolder, ext: '.html', flatten: true }]
       }
     },
+
 
 
     // watch file changes
@@ -246,6 +258,7 @@ module.exports = function(grunt) {
     },
 
 
+
     htmlmin: {                                     // Task
       dist: {                                      // Target
         options: {                                 // Target options
@@ -264,6 +277,7 @@ module.exports = function(grunt) {
         }
       }
     },
+
 
 
     yuidoc: {
@@ -286,11 +300,8 @@ module.exports = function(grunt) {
 
   // Load the plugins
   // ===================================
-  grunt.loadNpmTasks('grunt-contrib-compass');
-  grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-contrib-jade');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  // grunt.loadNpmTasks('grunt-yui-compressor');
+  require('load-grunt-tasks')(grunt, { scope: 'devDependencies' });
+  require('time-grunt')(grunt);
 
 
 
