@@ -6,43 +6,10 @@ module.exports = function(grunt) {
   grunt.util.linefeed = '\n';
 
 
-  var buildFolder = '../build/';
-
-  var jadedebug = {
-    compileDebug: false,
-    pretty: true,
-
-    data:{
-      partial: function(templatePath, dataObj){
-        var template = grunt.file.read(templatePath);
-
-        if(typeof(dataObj) === String){
-          dataObj = grunt.file.readJSON(dataObj);
-        }
-
-        if(templatePath.match(/.jade/g)){
-          return require('grunt-contrib-jade/node_modules/jade').compile(template, {filename: templatePath, pretty: true})(dataObj);
-        }else{
-          return template;
-        }
-      },
-      data: function(path){
-        return grunt.file.readJSON(path);
-      },
-      locals:{
-        getConfigFile:function(path){
-          return grunt.file.readJSON(path);
-        },
-        data: function(path){
-          return jadedebug.data.data(path);
-        },
-        partial: function(templatePath, dataObj){
-          return jadedebug.data.partial(templatePath, dataObj);
-        }
-      }
-    }
-  }
-
+  var build_folder = '../build/',
+      js_src_folders = ['js/*.js', 'js/**/*.js', '!js/libs/*.js'],
+      sass_src_folders = 'style/style.scss',
+      css_destination = build_folder+'/style'
 
 
 
@@ -56,12 +23,12 @@ module.exports = function(grunt) {
 
     banner: '/*!\n' +
             ' * <%= pkg.name %> v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
-            ' * Copyright 2013-<%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
+            ' * Copyright 2014-<%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
             ' * Licensed under <%= pkg.license.type %> (<%= pkg.license.url %>)\n' +
             ' */\n',
 
 
-    clean: ['../build'],
+    clean: [build_folder],
 
 
     jshint: {
@@ -69,7 +36,7 @@ module.exports = function(grunt) {
         jshintrc: 'js/.jshintrc'
       },
       src: {
-        src: ['js/*.js', 'js/**/*.js']
+        src: js_src_folders
       }
     },
 
@@ -81,12 +48,8 @@ module.exports = function(grunt) {
         stripBanners: false
       },
       build: {
-        src: [
-          'js/main.js'
-          // 'js/libs/*.js',
-          // 'js/project/*.js'
-        ],
-        dest: buildFolder+'js/<%= pkg.name %>.js'
+        src: js_src_folders,
+        dest: build_folder+'js/<%= pkg.name %>.js'
       }
     },
 
@@ -97,8 +60,8 @@ module.exports = function(grunt) {
         preserveComments: 'some'
       },
       build: {
-        src: '<%= concat.monte.dest %>',
-        dest: buildFolder+'js/<%= pkg.name %>.min.js'
+        src: '<%= concat.build.dest %>',
+        dest: build_folder+'js/<%= pkg.name %>.min.js'
       }
     },
 
@@ -121,7 +84,7 @@ module.exports = function(grunt) {
         options: {
           map: true
         },
-        src: buildFolder+'style/<%= pkg.name %>.css'
+        src: build_folder+'style/<%= pkg.name %>.css'
       }
     },
 
@@ -131,7 +94,7 @@ module.exports = function(grunt) {
       options: {
         csslintrc: 'style/.csslintrc'
       },
-      src: [buildFolder+'style/<%= pkg.name %>.css']
+      src: [build_folder+'style/<%= pkg.name %>.css']
     },
 
 
@@ -143,8 +106,8 @@ module.exports = function(grunt) {
         noAdvanced: true
       },
       build: {
-        src: [buildFolder+'style/<%= pkg.name %>.css'],
-        dest: buildFolder+'style/<%= pkg.name %>.min.css'
+        src: [build_folder+'style/<%= pkg.name %>.css'],
+        dest: build_folder+'style/<%= pkg.name %>.min.css'
       }
     },
 
@@ -157,10 +120,10 @@ module.exports = function(grunt) {
       },
       files: {
         src: [
-          buildFolder+'style/<%= pkg.name %>.css',
-          buildFolder+'style/<%= pkg.name %>.min.css',
-          buildFolder+'js/<%= pkg.name %>.js',
-          buildFolder+'js/<%= pkg.name %>.min.js'
+          build_folder+'style/<%= pkg.name %>.css',
+          build_folder+'style/<%= pkg.name %>.min.css',
+          build_folder+'js/<%= pkg.name %>.js',
+          build_folder+'js/<%= pkg.name %>.min.js'
         ]
       }
     },
@@ -173,50 +136,44 @@ module.exports = function(grunt) {
       },
       build: {
         expand: true,
-        cwd: buildFolder+'style/',
+        cwd: build_folder+'style/',
         src: ['*.css', '!*.min.css'],
-        dest: buildFolder+'style/'
+        dest: build_folder+'style/'
       }
     },
 
 
 
     // compile SASS files
-    compass: {
+    sass: {
+      options: {
+        outputStyle: 'expanded'
+      },
       build: {
         options: {
           sassDir: 'style',
-          cssDir: buildFolder+'style',
-          outputStyle: 'expanded',
-          noLineComments: true,
-          force: true,
-          relativeAssets: true,
-        }
-      },
-      deploy: {
-        options: {
-          sassDir: 'style',
-          cssDir: buildFolder+'style',
-          outputStyle: 'compressed',
-          noLineComments: true,
-          force: true,
-          relativeAssets: true,
+          cssDir: build_folder+'style',
+          outputStyle: 'expanded'
+        },
+        files: {
+          '<%= pkg.name %>.css': 'style.scss'
         }
       }
     },
 
 
 
+
     // copy files (font, img, js)
     copy: {
       fonts: {
-        files: [{expand: true, cwd: 'style/fonts', src:['**'], dest: buildFolder+'style/fonts'}]
+        files: [{expand: true, cwd: 'style/fonts', src:['**'], dest: build_folder+'style/fonts'}]
       },
       img: {
-        files : [{expand: true, cwd: 'img', src: ['**'], dest: buildFolder+'img'}]
+        files : [{expand: true, cwd: 'img', src: ['**'], dest: build_folder+'img'}]
       },
       js: {
-        files : [{expand: true, cwd: 'js', src: ['**'], dest: buildFolder+'js'}]
+        files : [{expand: true, cwd: 'js/libs', src: ['**'], dest: build_folder+'js/libs'}]
       }
     },
 
@@ -225,8 +182,11 @@ module.exports = function(grunt) {
     // compile jade files
     jade: {
       index: {
-        options: jadedebug,
-        files: [{expand: true, cwd: './', src: ['*.jade'], dest: buildFolder, ext: '.html', flatten: true }]
+        options: {
+          compileDebug: false,
+          pretty: true,
+        },
+        files: [{expand: true, cwd: './', src: ['*.jade'], dest: build_folder, ext: '.html', flatten: true }]
       }
     },
 
@@ -236,7 +196,7 @@ module.exports = function(grunt) {
     watch: {
       sass: {
         files: ['style/*.scss','style/**/*.scss'],
-        tasks: ['compass:build']
+        tasks: ['sass:build']
       },
       jade: {
         files: ['*.jade'],
@@ -259,40 +219,27 @@ module.exports = function(grunt) {
 
 
 
-    htmlmin: {                                     // Task
-      dist: {                                      // Target
-        options: {                                 // Target options
-          removeComments: true,
-          collapseWhitespace: true
-        },
-        files: {                                   // Dictionary of files
-          'dist/index.html': 'src/index.html',     // 'destination': 'source'
-          'dist/contact.html': 'src/contact.html'
-        }
-      },
-      dev: {                                       // Another target
-        files: {
-          'dist/index.html': 'src/index.html',
-          'dist/contact.html': 'src/contact.html'
-        }
-      }
-    },
+    // htmlmin: {                                     // Task
+    //   dist: {                                      // Target
+    //     options: {                                 // Target options
+    //       removeComments: true,
+    //       collapseWhitespace: true
+    //     },
+    //     files: {                                   // Dictionary of files
+    //       'dist/index.html': 'src/index.html',     // 'destination': 'source'
+    //       'dist/contact.html': 'src/contact.html'
+    //     }
+    //   },
+    //   dev: {                                       // Another target
+    //     files: {
+    //       'dist/index.html': 'src/index.html',
+    //       'dist/contact.html': 'src/contact.html'
+    //     }
+    //   }
+    // },
 
 
 
-    yuidoc: {
-      compile: {
-        name: '<%= pkg.name %>',
-        description: '<%= pkg.description %>',
-        version: '<%= pkg.version %>',
-        url: '<%= pkg.homepage %>',
-        options: {
-          paths: 'path/to/source/code/',
-          themedir: 'path/to/custom/theme/',
-          outdir: 'where/to/save/docs/'
-        }
-      }
-    }
 
   });
 
@@ -312,7 +259,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('debug', function() {
     grunt.task.run([
-      'compass:build',
+      'sass:build',
       'copy:img',
       'copy:js',
       'copy:fonts',
