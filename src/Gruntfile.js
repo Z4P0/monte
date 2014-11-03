@@ -7,10 +7,7 @@ module.exports = function(grunt) {
 
 
   var build_folder = '../build/',
-      js_src_folders = ['js/*.js', 'js/**/*.js', '!js/libs/*.js'],
-      sass_src_folders = 'style/style.scss',
-      css_destination = build_folder+'/style'
-
+      js_src_folders = ['js/*.js', 'js/**/*.js', '!js/libs/*.js'];
 
 
 
@@ -49,7 +46,7 @@ module.exports = function(grunt) {
       },
       build: {
         src: js_src_folders,
-        dest: build_folder+'js/<%= pkg.name %>.js'
+        dest: build_folder+'js/main.js'
       }
     },
 
@@ -57,11 +54,11 @@ module.exports = function(grunt) {
 
     uglify: {
       options: {
-        preserveComments: 'some'
+        preserveComments: 'none'
       },
       build: {
         src: '<%= concat.build.dest %>',
-        dest: build_folder+'js/<%= pkg.name %>.min.js'
+        dest: build_folder+'js/main.min.js'
       }
     },
 
@@ -84,7 +81,7 @@ module.exports = function(grunt) {
         options: {
           map: true
         },
-        src: build_folder+'style/<%= pkg.name %>.css'
+        src: build_folder+'style/style.css'
       }
     },
 
@@ -94,7 +91,7 @@ module.exports = function(grunt) {
       options: {
         csslintrc: 'style/.csslintrc'
       },
-      src: [build_folder+'style/<%= pkg.name %>.css']
+      src: [build_folder+'style/style.css']
     },
 
 
@@ -106,7 +103,11 @@ module.exports = function(grunt) {
         noAdvanced: true
       },
       build: {
-        src: [build_folder+'style/<%= pkg.name %>.css'],
+        src: [build_folder+'style/style.css'],
+        dest: build_folder+'style/style.min.css'
+      },
+      deploy: {
+        src: [build_folder+'style/style.css'],
         dest: build_folder+'style/<%= pkg.name %>.min.css'
       }
     },
@@ -119,6 +120,14 @@ module.exports = function(grunt) {
         banner: '<%= banner %>'
       },
       files: {
+        src: [
+          build_folder+'style/style.css',
+          build_folder+'style/<%= pkg.name %>.min.css',
+          build_folder+'js/main.js',
+          build_folder+'js/main.min.js'
+        ]
+      },
+      deploy: {
         src: [
           build_folder+'style/<%= pkg.name %>.css',
           build_folder+'style/<%= pkg.name %>.min.css',
@@ -150,13 +159,8 @@ module.exports = function(grunt) {
         outputStyle: 'expanded'
       },
       build: {
-        options: {
-          sassDir: 'style',
-          cssDir: build_folder+'style',
-          outputStyle: 'expanded'
-        },
         files: {
-          '<%= pkg.name %>.css': 'style.scss'
+          '../build/style/style.css': 'style/style.scss'
         }
       }
     },
@@ -172,7 +176,7 @@ module.exports = function(grunt) {
       img: {
         files : [{expand: true, cwd: 'img', src: ['**'], dest: build_folder+'img'}]
       },
-      js: {
+      js_libs: {
         files : [{expand: true, cwd: 'js/libs', src: ['**'], dest: build_folder+'js/libs'}]
       }
     },
@@ -196,7 +200,7 @@ module.exports = function(grunt) {
     watch: {
       sass: {
         files: ['style/*.scss','style/**/*.scss'],
-        tasks: ['sass:build']
+        tasks: ['build_css']
       },
       jade: {
         files: ['*.jade'],
@@ -207,8 +211,8 @@ module.exports = function(grunt) {
         tasks: ['copy:img']
       },
       js:{
-        files: ['js/*.js', 'js/**/*.js'],
-        tasks: ['copy:js']
+        files: js_src_folders,
+        tasks: ['build_js']
       },
       fonts:
       {
@@ -259,9 +263,10 @@ module.exports = function(grunt) {
 
   grunt.registerTask('debug', function() {
     grunt.task.run([
-      'sass:build',
+      'build_css',
+      'build_js',
       'copy:img',
-      'copy:js',
+      'copy:js_libs',
       'copy:fonts',
       'jade:index',
     ]);
@@ -270,8 +275,59 @@ module.exports = function(grunt) {
   grunt.registerTask('deploy', function() {
     grunt.task.run([
       'min',
-      'cssmin'
+      // 'cssmin',
+      'sass:build',
+      'csscomb:build',
+      'csslint:src',
+      'autoprefixer:build',
+      'cssmin:build'
+      // 'usebanner'
+    ]);
+
+  });
+
+
+
+
+
+
+  grunt.registerTask('build_js', function() {
+    grunt.task.run([
+      // 'jshint:src',
+      'concat:build',
+      'uglify:build'
     ]);
   });
+
+
+
+
+
+
+
+
+
+  grunt.registerTask('build_css', function() {
+    grunt.task.run([
+      'sass:build',
+      'csscomb:build',
+      'csslint:src',
+      'autoprefixer:build',
+      'cssmin:build'
+    ]);
+
+  });
+
+
+  grunt.registerTask('deploy_css', function() {
+    grunt.task.run([
+      'sass:build',
+      'csscomb:build',
+      'csslint:src',
+      'autoprefixer:build'
+    ]);
+
+  });
+
 
 };
