@@ -1,19 +1,26 @@
-include html/jade-helpers.jade
 doctype html
-head
-  title title
-  meta(name="description", content="description")
-  include html/meta.jade
-  script(src="js/libs/modernizr.js")
-  link(rel="stylesheet", href="style/style.css")
+html(lang="en").no-js
+    head
+        meta(charset="utf-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")
+        title m o n t e
+        meta(name="description", content="m o n t e")
+        meta(name="viewport", content="width=device-width, initial-scale=1")
+        link(rel="apple-touch-icon", href="apple-touch-icon.png")
+        link(rel="stylesheet", href="style/style.css")
+        script(src="js/libs/modernizr.js")
 
 
-body#homepage
-  a(href="#main", class="assistive-text") Skip to main content
-  div.container
-    div#main
-      h1 title
-      p &phi;
+    body#index
+        a(href="#main", class="visuallyhidden") Skip to main content
+        div.container
+            header.header
+                h1 m o n t e
+            div#main
+                p spanish for mountain
 
-  include html/scripts.jade
-</html>
+            footer.footer
+                p &phi;
+
+        //-script(src="js/libs/jquery.js")
+        script(src="js/main.js")

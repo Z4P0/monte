@@ -29,12 +29,8 @@ module.exports = function(grunt) {
 
 
     jshint: {
-      options: {
-        jshintrc: 'js/.jshintrc'
-      },
-      src: {
-        src: js_src_folders
-      }
+      options: {jshintrc: 'js/.jshintrc'},
+      src: {src: js_src_folders }
     },
 
 
@@ -53,9 +49,7 @@ module.exports = function(grunt) {
 
 
     uglify: {
-      options: {
-        preserveComments: 'none'
-      },
+      options: {preserveComments: 'none'},
       build: {
         src: '<%= concat.build.dest %>',
         dest: build_folder+'js/main.min.js'
@@ -78,9 +72,7 @@ module.exports = function(grunt) {
         ]
       },
       build: {
-        options: {
-          map: true
-        },
+        options: {map: true },
         src: build_folder+'style/style.css'
       }
     },
@@ -88,9 +80,7 @@ module.exports = function(grunt) {
 
 
     csslint: {
-      options: {
-        csslintrc: 'style/.csslintrc'
-      },
+      options: {csslintrc: 'style/.csslintrc'},
       src: [build_folder+'style/style.css']
     },
 
@@ -140,9 +130,7 @@ module.exports = function(grunt) {
 
 
     csscomb: {
-      options: {
-        config: 'style/.csscomb.json'
-      },
+      options: {config: 'style/.csscomb.json'},
       build: {
         expand: true,
         cwd: build_folder+'style/',
@@ -155,13 +143,9 @@ module.exports = function(grunt) {
 
     // compile SASS files
     sass: {
-      options: {
-        outputStyle: 'expanded'
-      },
+      options: {outputStyle: 'expanded'},
       build: {
-        files: {
-          '../build/style/style.css': 'style/style.scss'
-        }
+        files: {'../build/style/style.css': 'style/style.scss'}
       }
     },
 
@@ -190,7 +174,7 @@ module.exports = function(grunt) {
           compileDebug: false,
           pretty: true,
         },
-        files: [{expand: true, cwd: './', src: ['*.jade'], dest: build_folder, ext: '.html', flatten: true }]
+        files: [{expand: true, cwd: './', src: ['*.jade', 'html/*.jade', '!_*.jade', '!html/_*.jade'], dest: build_folder, ext: '.html', flatten: true }]
       }
     },
 
@@ -203,20 +187,19 @@ module.exports = function(grunt) {
         tasks: ['build_css']
       },
       jade: {
-        files: ['*.jade'],
+        files: ['*.jade', 'html/*.jade'],
         tasks: ['jade:index']
       },
       img: {
         files: ['img/*.*', 'img/**/*.*'],
         tasks: ['copy:img']
       },
-      js:{
+      js: {
         files: js_src_folders,
         tasks: ['build_js']
       },
-      fonts:
-      {
-        files: ['fonts/*.*'],
+      fonts: {
+        files: ['style/fonts/*.*'],
         tasks: ['copy:fonts']
       }
     },
