@@ -3,7 +3,7 @@
   "description": "personal project bootstrap - zapo",
   "author": "luis rosario {zapo}",
   "homepage": "http://www.luisrosar.io/lab/monte",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "repository": {
     "type": "git",
     "url": "https://github.com/aztec8/monte.git"
@@ -17,18 +17,15 @@
     "grunt" : "~0.4.5",
     "grunt-autoprefixer": "~2.1.0",
     "grunt-banner": "~0.3.0",
-    "grunt-contrib-clean": "~0.6.0",
     "grunt-contrib-concat": "~0.5.0",
     "grunt-contrib-copy": "~0.7.0",
     "grunt-contrib-csslint": "~0.3.1",
     "grunt-contrib-cssmin": "~0.11.0",
     "grunt-contrib-jade": "~0.14.0",
-    "grunt-contrib-jshint": "~0.10.0",
     "grunt-contrib-uglify": "~0.7.0",
     "grunt-contrib-watch": "~0.6.1",
     "grunt-csscomb": "~3.0.0",
     "grunt-sass": "^0.16.0",
-    "grunt-exec": "~0.4.6",
     "load-grunt-tasks": "~2.0.0",
     "marked": "~0.3.2",
     "time-grunt": "~1.0.0"
