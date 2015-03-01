@@ -5,13 +5,24 @@ module.exports = function(grunt) {
 
     // project directory layout
     var project = {
-        build_dir: '../build',
         images_dir: 'images',
         jade_dir: 'html',
-        sass_dir: 'style',
+        sass_dir: 'style/',
+        sass_filename: 'style.scss',
         sass_assets: 'style/assets',
-        js_dir: 'js',
-        js_libs_dir: 'js/vendor'
+        js_libs_dir: 'js/vendor',
+        js_files: [
+            'js/monte/init.js',
+        ],
+        output: {
+            folder:                 '../build/',
+            css_folder:                 'style/',
+            css_filename:                   'style.css',
+            css_filename_minified:          'style.min.css',
+            js_folder:                  'js/',
+            js_filename:                    'main.js',
+            js_filename_minified:           'main.min.js'
+        }
     };
 
 
@@ -37,14 +48,11 @@ module.exports = function(grunt) {
         // 1. concat
         concat: {
             options: {
-                stripBanners: false
+                stripBanners: false,
             },
             build: {
-                src: [
-                    '!<%= project.js_dir %>/<%= project.js_libs_dir %>',
-                    '<%= project.js_dir %>/*.js'
-                ],
-                dest: '<%= project.build_dir %>/<%= project.js_dir %>/<%= pkg.name %>.js'
+                src: '<%= project.js_files %>',
+                dest: '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_filename %>'
             }
         },
 
@@ -54,8 +62,8 @@ module.exports = function(grunt) {
                 preserveComments: 'none'
             },
             build: {
-                src: '<%= concat.build.dest %>',
-                dest: '<%= project.build_dir %>/<%= project.js_dir %>/<%= pkg.name %>.min.js'
+                src: '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_filename %>',
+                dest: '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_filename_minified %>'
             }
         },
 
@@ -71,8 +79,8 @@ module.exports = function(grunt) {
             },
             build: {
                 files: {
-                    '<%= project.build_dir %>/<%= project.sass_dir %>/<%= pkg.name %>.css':
-                        '<%= project.sass_dir %>/<%= pkg.name %>.scss'
+                    '<%= project.output.folder %><%= project.output.css_folder %><%= project.output.css_filename %>':
+                        '<%= project.sass_dir %><%= project.sass_filename %>'
                 }
             }
         },
@@ -93,9 +101,9 @@ module.exports = function(grunt) {
             },
             build: {
                 options: {
-                    map: true
+                    map: false
                 },
-                src: '<%= project.build_dir %>/<%= project.sass_dir %>/<%= pkg.name %>.css'
+                src:'<%= project.output.folder %><%= project.output.css_folder %><%= project.output.css_filename %>'
             }
         },
 
@@ -105,10 +113,8 @@ module.exports = function(grunt) {
                 config: 'style/.csscomb.json'
             },
             build: {
-                // expand: true,
-                // cwd: build_folder+'style/',
-                src: ['<%= project.build_dir %>/<%= project.sass_dir %>/<%= pkg.name %>.css'],
-                dest: '<%= project.build_dir %>/<%= project.sass_dir %>/<%= pkg.name %>.css'
+                src: ['<%= project.output.folder %><%= project.output.css_folder %><%= project.output.css_filename %>'],
+                dest: '<%= project.output.folder %><%= project.output.css_folder %><%= project.output.css_filename %>'
             }
         },
 
@@ -118,7 +124,7 @@ module.exports = function(grunt) {
             options: {
                 csslintrc: 'style/.csslintrc'
             },
-            build: ['<%= autoprefixer.build.src %>']
+            build: ['<%= project.output.folder %><%= project.output.css_folder %><%= project.output.css_filename %>']
         },
 
         // 5. minify
@@ -129,8 +135,8 @@ module.exports = function(grunt) {
                 noAdvanced: true
             },
             build: {
-                src: ['<%= project.build_dir %>/<%= project.sass_dir %>/<%= pkg.name %>.css'],
-                dest: '<%= project.build_dir %>/<%= project.sass_dir %>/<%= pkg.name %>.min.css'
+                src: ['<%= project.output.folder %><%= project.output.css_folder %><%= project.output.css_filename %>'],
+                dest: '<%= project.output.folder %><%= project.output.css_folder %><%= project.output.css_filename_minified %>'
             }
         },
 
@@ -148,12 +154,12 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: './',
+                        cwd: 'html/',
                         src: [
-                            '*.jade',
-                            '<%= project.jade_dir %>/*.jade',
+                            '!_*.jade',
+                            '*.jade'
                         ],
-                        dest: '<%= project.build_dir %>',
+                        dest: '<%= project.output.folder %>',
                         ext: '.html',
                         flatten: true
                     }
@@ -171,21 +177,21 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     src:['<%= project.sass_assets %>/**'],
-                    dest: '<%= project.build_dir %>'
+                    dest: '<%= project.output.folder %>'
                 }]
             },
             images: {
                 files : [{
                     expand: true,
                     src: ['<%= project.images_dir %>/**'],
-                    dest: '<%= project.build_dir %>'
+                    dest: '<%= project.output.folder %>'
                 }]
             },
             js_libs: {
                 files : [{
                     expand: true,
                     src: ['<%= project.js_libs_dir %>/**'],
-                    dest: '<%= project.build_dir %>'
+                    dest: '<%= project.output.folder %>'
                 }]
             }
         },
@@ -198,10 +204,10 @@ module.exports = function(grunt) {
             },
             build: {
                 src: [
-                    '<%= project.build_dir %>/<%= project.sass_dir %>/<%= pkg.name %>.css',
-                    '<%= project.build_dir %>/<%= project.sass_dir %>/<%= pkg.name %>.min.css',
-                    '<%= project.build_dir %>/<%= project.js_dir %>/<%= pkg.name %>.js',
-                    '<%= project.build_dir %>/<%= project.js_dir %>/<%= pkg.name %>.min.js'
+                    '<%= project.output.folder %><%= project.output.css_folder %><%= project.output.css_filename %>',
+                    '<%= project.output.folder %><%= project.output.css_folder %><%= project.output.css_filename_minified %>',
+                    '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_filename %>',
+                    '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_filename_minified %>'
                 ]
             }
         },

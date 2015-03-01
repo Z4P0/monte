@@ -24,11 +24,11 @@ $ python -m SimpleHTTPServer 8080  # optional port number argument
 I guess I'll just use this a resource too
 Favored JS Libraries
 ----------------------------------------
-swipe.js
-moment.js
-handlebars.js
+- swipe.js
+- moment.js
+- handlebars.js
 
 Web Frameworks
 ----------------------------------------
-Flask
-Django
+- Flask
+- Django

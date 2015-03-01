@@ -5,10 +5,7 @@ html(lang="en").no-js
     meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")
     title m o n t e
     meta(name="description", content="m o n t e")
-    meta(name="viewport", content="width=device-width, initial-scale=1")
-    link(rel="apple-touch-icon", href="apple-touch-icon.png")
-    link(rel="stylesheet", href="style/style.css")
-    script(src="js/vendor/modernizr.min.js")
+    include _head.jade
 
   body#index
     a(href="#main").visuallyhidden Skip to main content
@@ -21,5 +18,4 @@ html(lang="en").no-js
       footer.footer
         p &phi;
 
-    //- script(src="js/vendor/jquery.min.js")
-    script(src="js/monte.js")
+    include _scripts.jade
