@@ -5,12 +5,12 @@ module.exports = function(grunt) {
 
     // project directory layout
     var project = {
-        images_dir: 'images',
-        jade_dir: 'html',
+        images_dir: 'images/',
+        jade_dir: 'jade/',
         sass_dir: 'style/',
         sass_filename: 'style.scss',
-        sass_assets: 'style/assets',
-        js_libs_dir: 'js/vendor',
+        sass_assets: 'style/assets/',
+        js_libs_dir: 'js/vendor/',
         js_files: [
             'js/monte/init.js',
         ],
@@ -110,7 +110,7 @@ module.exports = function(grunt) {
         // 3. comb
         csscomb: {
             options: {
-                config: 'style/.csscomb.json'
+                config: '<%= project.sass_dir %>.csscomb.json'
             },
             build: {
                 src: ['<%= project.output.folder %><%= project.output.css_folder %><%= project.output.css_filename %>'],
@@ -122,7 +122,7 @@ module.exports = function(grunt) {
         // 4. lint
         csslint: {
             options: {
-                csslintrc: 'style/.csslintrc'
+                csslintrc: '<%= project.sass_dir %>.csslintrc'
             },
             build: ['<%= project.output.folder %><%= project.output.css_folder %><%= project.output.css_filename %>']
         },
@@ -154,7 +154,7 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: 'html/',
+                        cwd: '<%= project.jade_dir %>',
                         src: [
                             '!_*.jade',
                             '*.jade'
@@ -176,21 +176,21 @@ module.exports = function(grunt) {
             style_assets: {
                 files: [{
                     expand: true,
-                    src:['<%= project.sass_assets %>/**'],
+                    src:['<%= project.sass_assets %>**'],
                     dest: '<%= project.output.folder %>'
                 }]
             },
             images: {
                 files : [{
                     expand: true,
-                    src: ['<%= project.images_dir %>/**'],
+                    src: ['<%= project.images_dir %>**'],
                     dest: '<%= project.output.folder %>'
                 }]
             },
             js_libs: {
                 files : [{
                     expand: true,
-                    src: ['<%= project.js_libs_dir %>/**'],
+                    src: ['<%= project.js_libs_dir %>**'],
                     dest: '<%= project.output.folder %>'
                 }]
             }
@@ -215,15 +215,15 @@ module.exports = function(grunt) {
         // watch file changes
         watch: {
             sass: {
-                files: ['style/*.scss','style/**/*.scss'],
+                files: ['<%= project.sass_dir %>*.scss','<%= project.sass_dir %>**/*.scss'],
                 tasks: ['sass:build', 'autoprefixer:build']
             },
             jade: {
-                files: [ '*.jade', 'html/*.jade'],
+                files: [ '<%= project.jade_dir %>*.jade', '<%= project.jade_dir %>**/*.jade'],
                 tasks: ['jade:build']
             },
             images: {
-                files: ['images/*.*', 'images/**/*.*'],
+                files: ['<%= project.images_dir %>*.*', '<%= project.images_dir %>**/*.*'],
                 tasks: ['copy:images']
             },
             js: {
@@ -231,7 +231,7 @@ module.exports = function(grunt) {
                 tasks: ['concat:build']
             },
             style_assets: {
-                files: ['style/assets/*.*', 'style/assets/**/*.*'],
+                files: ['<%= project.sass_assets %>*.*', '<%= project.sass_assets %>**/*.*'],
                 tasks: ['copy:style_assets']
             }
         }
@@ -253,12 +253,12 @@ module.exports = function(grunt) {
     // ----------------------------------------
     grunt.registerTask('build', function() {
         grunt.task.run([
-            'sass:build',       // build css
-            'autoprefixer:build',
+            'sass',             // build css
+            'autoprefixer',
             'copy:style_assets',// copy fonts/pngs
-            'concat:build',     // build js
+            'concat',           // build js
             'copy:js_libs',     // copy js/ibs
-            'jade:build',       // build html
+            'jade',             // build html
             'copy:images',      // copy images
         ]);
     });
@@ -267,10 +267,10 @@ module.exports = function(grunt) {
         // minify everything
         grunt.task.run([
             'build',
-            'csscomb:build',
-            'csslint:build',
-            'cssmin:build',
-            'uglify:build',
+            'csscomb',
+            'csslint',
+            'cssmin',
+            'uglify',
             'usebanner'
         ]);
     });
