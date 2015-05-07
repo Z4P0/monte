@@ -49,6 +49,7 @@ module.exports = function(grunt) {
         concat: {
             options: {
                 stripBanners: false,
+                sourceMap: true
             },
             build: {
                 src: '<%= project.js_files %>',
@@ -75,7 +76,8 @@ module.exports = function(grunt) {
         // 1. build
         sass: {
             options: {
-                outputStyle: 'expanded'
+                outputStyle: 'expanded',
+                sourceMap: true
             },
             build: {
                 files: {
