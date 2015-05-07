@@ -14,6 +14,13 @@
     {@media only screen and (min-width: 1024px) {@content; } }
 }
 
+@mixin if_there_are($n) {
+    &:nth-last-child(n+#{$n}),
+    &:nth-last-child(n+#{$n}) ~ * {
+        @content;
+    }
+}
+
 
 // css3 - transition
 @mixin transition($property, $time)
