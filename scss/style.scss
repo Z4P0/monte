@@ -1,11 +1,16 @@
 @import "vars";
+@import "settings";
 @import "mixins";
-// 3rd party
-@import "vendor/normalize";
-@import "vendor/print";
-@import "vendor/classes";
-@import "vendor/normalize";
-@import "vendor/foundation";
+// vendor
+@import "bower_components/foundation/scss/normalize.scss";
+@import "bower_components/foundation/scss/foundation.scss";
+
+
 // custom
-@import "theme/base";
-@import "theme/typography";
+html {
+    -webkit-font-smoothing: antialiased;
+}
+::selection {
+    background: $red;
+    text-shadow: none;
+}
