@@ -7,13 +7,14 @@ html(lang="en").no-js
     meta(name="description", content="m o n t e")
     include _head.jade
 
-  body#index
-    a(href="#main").visuallyhidden Skip to main content
+  body
+    a(href="#main").show-for-sr Skip to main content
     .container
       header.header
         .row
           .columns
             h1 m o n t e
+
       main#main
         .row
           .columns

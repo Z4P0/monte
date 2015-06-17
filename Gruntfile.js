@@ -12,16 +12,16 @@ module.exports = function(grunt) {
         images_dir: 'images/',
         jade_dir: 'jade/',
         js_files: [
-            'init.js',
+            'js/init.js',
         ],
         js_vendor_files: [
+            'bower_components/modernizr/modernizr.js',
             'bower_components/fastclick/lib/fastclick.js',
+            'bower_components/jquery/dist/jquery.js',
             'bower_components/foundation/js/foundation.js',
             'bower_components/greensock/src/uncompressed/TweenMax.js',
             'bower_components/howler/howler.js',
-            'bower_components/jquery/dist/jquery.js',
             'bower_components/konami-js/konami.js',
-            'bower_components/modernizr/modernizr.js',
         ],
         misc_dir: 'misc/',
         sass_dir: 'scss/',
@@ -83,7 +83,7 @@ module.exports = function(grunt) {
                 dest: '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_vendor_filename %>'
             },
             deploy: {
-                src: '<%= project.js_vendor_files %>, <%= project.js_files %>',
+                src: ['<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_vendor_filename %>', '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_filename %>'],
                 dest: '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_master_filename %>'
             }
         },
@@ -328,12 +328,8 @@ module.exports = function(grunt) {
             'csslint',
             'cssmin',
             // build js
-            'concat:build',
-            'concat:vendors',
-            'concat:deploy',
-            'uglify:build',
-            'uglify:vendors',
-            'uglify:deploy',
+            'concat',
+            'uglify',
             // build html
             'jade',
             // banner
