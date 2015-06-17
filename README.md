@@ -1,13 +1,9 @@
 # monte
 
-grunt project bootstrap
-heavily influenced by the html5 boilerplate, full credit to them for making the
-Internet a better place
-
-##### Requires node
+base web project.
+**requires node, grunt, and bower**
 
 ```
-$ cd src/
 $ npm install
 $ grunt
 ```
