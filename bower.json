@@ -1,0 +1,23 @@
+{
+  "name": "monte",
+  "version": "0.0.1",
+  "homepage": "http://luisrosar.io",
+  "authors": [
+    "luis rosario //zapo"
+  ],
+  "description": "web project starter",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "foundation": "~5.5.2",
+    "greensock": "~1.17.0",
+    "konami-js": "*",
+    "howler": "~1.1.26"
+  }
+}

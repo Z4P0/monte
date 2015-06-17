@@ -4,25 +4,47 @@ module.exports = function(grunt) {
     grunt.util.linefeed = '\n';  // Force use of Unix newlines
 
     // project directory layout
+    // ============================================================
     var project = {
+
+        // configuration
+        // ----------------------------------------
         images_dir: 'images/',
-        misc_dir: 'misc/',
         jade_dir: 'jade/',
-        sass_dir: 'style/',
-        sass_filename: 'style.scss',
-        sass_assets: 'style/assets/',
-        js_libs_dir: 'js/vendor/',
         js_files: [
-            'js/monte/init.js',
+            'init.js',
         ],
+        js_vendor_files: [
+            'bower_components/fastclick/lib/fastclick.js',
+            'bower_components/foundation/js/foundation.js',
+            'bower_components/greensock/src/uncompressed/TweenMax.js',
+            'bower_components/howler/howler.js',
+            'bower_components/jquery/dist/jquery.js',
+            'bower_components/konami-js/konami.js',
+            'bower_components/modernizr/modernizr.js',
+        ],
+        misc_dir: 'misc/',
+        sass_dir: 'scss/',
+        sass_filename: 'style.scss',
+
+        // build output
+        // ----------------------------------------
         output: {
-            folder:                 '../build/',
-            css_folder:                 'style/',
+            folder:                 './',
+            css_folder:                 'css/',
             css_filename:                   'style.css',
             css_filename_minified:          'style.min.css',
             js_folder:                  'js/',
             js_filename:                    'main.js',
-            js_filename_minified:           'main.min.js'
+            js_filename_minified:           'main.min.js',
+            js_vendor_filename:             'vendors.js',
+            js_vendor_filename_minified:    'vendors.min.js',
+            js_master_filename:             'scripts.js',
+            js_master_filename_minified:    'scripts.min.js'
+        },
+
+        deploy: {
+            folder:                 '../deploy',
         }
     };
 
@@ -55,6 +77,14 @@ module.exports = function(grunt) {
             build: {
                 src: '<%= project.js_files %>',
                 dest: '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_filename %>'
+            },
+            vendors: {
+                src: '<%= project.js_vendor_files %>',
+                dest: '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_vendor_filename %>'
+            },
+            deploy: {
+                src: '<%= project.js_vendor_files %>, <%= project.js_files %>',
+                dest: '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_master_filename %>'
             }
         },
 
@@ -66,6 +96,14 @@ module.exports = function(grunt) {
             build: {
                 src: '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_filename %>',
                 dest: '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_filename_minified %>'
+            },
+            vendors: {
+                src: '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_vendor_filename %>',
+                dest: '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_vendor_filename_minified %>'
+            },
+            deploy: {
+                src: '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_master_filename %>',
+                dest: '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_master_filename_minified %>'
             }
         },
 
@@ -159,7 +197,6 @@ module.exports = function(grunt) {
                         expand: true,
                         cwd: '<%= project.jade_dir %>',
                         src: [
-                            '!_*.jade',
                             '*.jade'
                         ],
                         dest: '<%= project.output.folder %>',
@@ -174,36 +211,57 @@ module.exports = function(grunt) {
 
         // Utils
         // ----------------------------------------
-        // 1. copy files (font, img, js)
+        // 1. copy files - only used for deployment
         copy: {
-            style_assets: {
-                files: [{
+            css: {
+                files : [{
                     expand: true,
-                    src:['<%= project.sass_assets %>**'],
-                    dest: '<%= project.output.folder %>'
+                    src: [
+                        '<%= project.output.folder %><%= project.output.css_folder %><%= project.output.css_filename %>',
+                        '<%= project.output.folder %><%= project.output.css_folder %><%= project.output.css_filename_minified %>'
+                    ],
+                    dest: '<%= project.deploy.folder %>'
                 }]
             },
             images: {
                 files : [{
                     expand: true,
                     src: ['<%= project.images_dir %>**'],
-                    dest: '<%= project.output.folder %>'
+                    dest: '<%= project.deploy.folder %>'
+                }]
+            },
+            html: {
+                files : [{
+                    expand: true,
+                    src: ['<%= project.output.folder %>*.html'],
+                    dest: '<%= project.deploy.folder %>'
+                }]
+            },
+            js: {
+                files : [{
+                    expand: true,
+                    src: [
+                        // custom scripts
+                        '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_filename %>',
+                        // vendor scripts
+                        '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_vendor_filename %>',
+                        // combined scripts
+                        '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_master_filename %>',
+                        // minified
+                        '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_filename_minified %>',
+                        '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_vendor_filename_minified %>',
+                        '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_master_filename_minified %>',
+                    ],
+                    dest: '<%= project.deploy.folder %>'
                 }]
             },
             misc: {
                 files : [{
                     expand: true,
                     src: ['<%= project.misc_dir %>**'],
-                    dest: '<%= project.output.folder %>'
+                    dest: '<%= project.deploy.folder %>'
                 }]
             },
-            js_libs: {
-                files : [{
-                    expand: true,
-                    src: ['<%= project.js_libs_dir %>**'],
-                    dest: '<%= project.output.folder %>'
-                }]
-            }
         },
 
         // 2. banners
@@ -240,9 +298,9 @@ module.exports = function(grunt) {
                 files: '<%= concat.build.src %>',
                 tasks: ['concat:build']
             },
-            style_assets: {
-                files: ['<%= project.sass_assets %>*.*', '<%= project.sass_assets %>**/*.*'],
-                tasks: ['copy:style_assets']
+            js_vendors: {
+                files: '<%= concat.deploy.src %>',
+                tasks: ['concat:deploy']
             }
         }
 
@@ -259,30 +317,39 @@ module.exports = function(grunt) {
 
     // Default task(s)
     // ===================================
-    grunt.registerTask('default', ['deploy', 'watch']);
+    grunt.registerTask('default', ['build', 'watch']);
     // ----------------------------------------
     grunt.registerTask('build', function() {
         grunt.task.run([
-            'sass',             // build css
+            // build css
+            'sass',
             'autoprefixer',
-            'copy:style_assets',// copy fonts/pngs
-            'concat',           // build js
-            'copy:js_libs',     // copy js/ibs
-            'jade',             // build html
-            'copy:images',      // copy images
-            'copy:misc',      // copy misc
+            'csscomb',
+            'csslint',
+            'cssmin',
+            // build js
+            'concat:build',
+            'concat:vendors',
+            'concat:deploy',
+            'uglify:build',
+            'uglify:vendors',
+            'uglify:deploy',
+            // build html
+            'jade',
+            // banner
+            'usebanner'
         ]);
     });
 
     grunt.registerTask('deploy', function() {
-        // minify everything
+
+        console.log('optional filepath parameter');
+
+        // build + output to a directory
+        // default: ../deploy
         grunt.task.run([
             'build',
-            'csscomb',
-            'csslint',
-            'cssmin',
-            'uglify',
-            'usebanner'
+            'copy',
         ]);
     });
 

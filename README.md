@@ -4,28 +4,17 @@ base web project.
 **requires node, grunt, and bower**
 
 ```
-$ npm install
-$ grunt
+[monte]$ npm install
 ```
-
-The project will build into a build/ directory
 
 In a seperate tab run a Python server
 ```
-$ cd build/
 $ python -m SimpleHTTPServer
 $ python -m SimpleHTTPServer 8080  # optional port number argument
 ```
 
-### Current stack
-
-Frameworks:
-- Foundation (SCSS and JS)
-
-JS Libraries:
-- jQuery
-- Fastclick
-- Modernizr
+## Current Stack
+- GreenSock (TweenMax)
 - Howler
 - Konami
-- GreenSock (TweenMax)
+- Zurb Foundation (jQuery/Fastclick/Modernizr)
