@@ -83,7 +83,10 @@ module.exports = function(grunt) {
                 dest: '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_vendor_filename %>'
             },
             deploy: {
-                src: ['<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_vendor_filename %>', '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_filename %>'],
+                src: [
+                    '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_vendor_filename %>',
+                    '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_filename %>'
+                ],
                 dest: '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_master_filename %>'
             }
         },
@@ -92,14 +95,6 @@ module.exports = function(grunt) {
         uglify: {
             options: {
                 preserveComments: 'none'
-            },
-            build: {
-                src: '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_filename %>',
-                dest: '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_filename_minified %>'
-            },
-            vendors: {
-                src: '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_vendor_filename %>',
-                dest: '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_vendor_filename_minified %>'
             },
             deploy: {
                 src: '<%= project.output.folder %><%= project.output.js_folder %><%= project.output.js_master_filename %>',
@@ -326,10 +321,9 @@ module.exports = function(grunt) {
             'autoprefixer',
             'csscomb',
             'csslint',
-            'cssmin',
             // build js
-            'concat',
-            'uglify',
+            'concat:build',
+            'concat:vendors',
             // build html
             'jade',
             // banner
@@ -339,12 +333,20 @@ module.exports = function(grunt) {
 
     grunt.registerTask('deploy', function() {
 
-        console.log('optional filepath parameter');
+        var target = grunt.option('target');
+        if (target) {
+            // adjust our project settings
+            var new_settings = project;
+                new_settings.deploy.folder = target;
+            grunt.config.set('project', new_settings);
+        }
 
         // build + output to a directory
         // default: ../deploy
         grunt.task.run([
             'build',
+            'cssmin',
+            'uglify',
             'copy',
         ]);
     });
