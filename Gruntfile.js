@@ -12,7 +12,7 @@ module.exports = function(grunt) {
         images_dir: 'images/',
         jade_dir: 'jade/',
         js_files: [
-            'js/init.js',
+            'js/monte/init.js',
         ],
         js_vendor_files: [
             'bower_components/modernizr/modernizr.js',
@@ -290,12 +290,8 @@ module.exports = function(grunt) {
                 tasks: ['copy:images']
             },
             js: {
-                files: '<%= concat.build.src %>',
+                files: '<%= project.js_files %>',
                 tasks: ['concat:build']
-            },
-            js_vendors: {
-                files: '<%= concat.deploy.src %>',
-                tasks: ['concat:deploy']
             }
         }
 

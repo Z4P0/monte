@@ -8,7 +8,9 @@
 
         tag: 'M O N T E',
 
-        settings: {},
+        settings: {
+            drupal_theme_path: '/sites/all/themes/arrowhead'
+        },
 
         modules: {},
 
@@ -37,14 +39,17 @@
 
         utils: {
 
-            drupal_test: function () {
-                var drupal_land = false;
-                // recon to see if we're in Drupal-land
+            // recon to see if we're in Drupal-land
+            drupal_test: function (tru_callback, false_callback) {
                 if (typeof Drupal !== 'undefined') {
-                    drupal_land = true;
+                    // You are here: Drupal
+                    if (tru_callback) tru_callback();
+                    return true;
+                } else {
+                    // vanilla env
+                    if (false_callback) false_callback();
+                    return false;
                 }
-
-                return drupal_land;
             },
 
             smooth_scroll: function () {
@@ -68,39 +73,30 @@
             konami: function () {
 
                 // file urls
-                var howlerjs_url = 'js/vendor/howler.min.js';
                 var mp3s = [
                     'misc/internet.mp3',
                     'misc/mario.mp3',
                     'misc/seinfeld.mp3'
                 ];
-                // file paths are different for Drupal
-                if (monte.settings.in_drupal_environment) {
+
+                // change file paths are different for Drupal
+                monte.utils.drupal_test(function () {
                     for (var i = 0; i < mp3s.length; i++) {
                         mp3s[i] = monte.settings.drupal_theme_path + mp3s[i];
                     }
-                    howlerjs_url = monte.settings.drupal_theme_path + howlerjs_url;
-                }
+                });
 
                 // load Howler
-                if (window.Howl === undefined) {
-                    $.ajax({
-                        url: howlerjs_url,
-                        dataType: 'script',
-                        success: function () {
-                            monte.sound = new Howl({
-                                urls: [mp3s[Math.floor(Math.random() * 3)]]
-                            }).play();
-                        }
-                    });
-
+                if (monte.sound === undefined) {
+                    monte.sound = new Howl({
+                        urls: [mp3s[Math.floor(Math.random() * 3)]]
+                    }).play();
                 } else {
                     // play new sound. stop other one
                     monte.sound.unload();
                     monte.sound = new Howl({
                         urls: [mp3s[Math.floor(Math.random() * 3)]]
                     }).play();
-
                 }
 
             }
