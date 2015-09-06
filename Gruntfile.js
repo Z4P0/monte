@@ -10,7 +10,7 @@ module.exports = function(grunt) {
         // configuration
         // ----------------------------------------
         images_dir: 'images/',
-        jade_dir: 'jade/',
+        jade_dir: './',
         js_files: [
             'js/monte/init.js',
         ],
@@ -221,7 +221,7 @@ module.exports = function(grunt) {
             images: {
                 files : [{
                     expand: true,
-                    src: ['<%= project.images_dir %>**'],
+                    src: ['<%= project.images_dir %>**', 'favicon.ico', 'apple-touch-icon.png'],
                     dest: '<%= project.deploy.folder %>'
                 }]
             },

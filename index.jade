@@ -5,7 +5,9 @@ html(lang="en").no-js
     meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")
     title m o n t e
     meta(name="description", content="m o n t e")
-    include _head.jade
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(rel="apple-touch-icon", href="apple-touch-icon.png")
+    link(rel="stylesheet", href="css/style.css")
 
   body
     a(href="#main").show-for-sr Skip to main content
@@ -25,4 +27,5 @@ html(lang="en").no-js
           .columns
             p &phi;
 
-    include _scripts.jade
+    script(src="js/vendors.js")
+    script(src="js/main.js")

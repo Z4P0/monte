@@ -1,9 +1,9 @@
 {
   "name": "monte",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "http://luisrosar.io",
   "authors": [
-    "luis rosario //zapo"
+    "luis rosario (zapo);"
   ],
   "description": "web project starter",
   "license": "MIT",
