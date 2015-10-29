@@ -1,6 +1,6 @@
 {
   "name": "monte",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "homepage": "http://luisrosar.io",
   "authors": [
     "luis rosario (zapo);"
@@ -15,9 +15,8 @@
     "tests"
   ],
   "dependencies": {
-    "foundation": "~5.5.2",
-    "greensock": "~1.17.0",
+    "foundation": "~5.5.3",
     "konami-js": "*",
-    "howler": "~1.1.26"
+    "howler.js": "howler#~1.1.27"
   }
 }

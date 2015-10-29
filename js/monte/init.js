@@ -10,27 +10,11 @@
 
 
 
-    init: function() {
-
-      console.log(this.tag);
-
-      // add smooth scroll
-      this.utils.smooth_scroll();
-
-      // konami /* play sound effect */
-      var easter_egg = new Konami(this.utils.konami);
-
-    },
-
-
-
     utils: {
-
-
       smooth_scroll: function () {
         // smooth scroll - original source below
         // http://www.learningjquery.com/2007/10/improved-animated-scrolling-script-for-same-page-links
-        $('a[data-smooth-scroll])').click(function() {
+        $('a[data-smooth-scroll]').click(function() {
           if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
             var target = $(this.hash);
             target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
@@ -46,7 +30,6 @@
       },
 
       konami: function () {
-
         // file urls
         var mp3s = [
           'misc/internet.mp3',
@@ -66,8 +49,21 @@
             urls: [mp3s[Math.floor(Math.random() * 3)]]
           }).play();
         }
-
       }
+    },
+
+
+
+    init: function() {
+
+      if (console !== undefined) console.log(this.tag);
+
+      // add smooth scroll
+      this.utils.smooth_scroll();
+
+      // konami /* play sound effect */
+      var easter_egg = new Konami(this.utils.konami);
+
     }
 
   };

@@ -3,12 +3,8 @@ node_modules
 bower_components
 css
 *.html
+*.map
 js/main.js
-js/main.js.map
 js/main.min.js
-js/scripts.js
-js/scripts.js.map
-js/scripts.min.js
 js/vendors.js
-js/vendors.js.map
 js/vendors.min.js
