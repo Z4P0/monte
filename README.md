@@ -1,6 +1,6 @@
 # monte
 
-base web project.
+web project starter
 **requires node, grunt, and bower**
 
 ```
@@ -16,4 +16,4 @@ $ python -m SimpleHTTPServer 8080  # optional port number argument
 ## Current Stack
 - Howler
 - Konami
-- Zurb Foundation (jQuery/Fastclick/Modernizr)
+- Zurb Foundation (jQuery, WhatInput)

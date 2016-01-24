@@ -1,11 +1,11 @@
 {
   "name": "monte",
-  "version": "0.1.0",
+  "version": "3.0.0",
   "homepage": "http://luisrosar.io",
   "authors": [
-    "luis rosario (zapo);"
+    "luis rosario [zapo]"
   ],
-  "description": "web project starter",
+  "description": "base front-end dependencies",
   "license": "MIT",
   "ignore": [
     "**/.*",
@@ -15,8 +15,9 @@
     "tests"
   ],
   "dependencies": {
-    "foundation": "~5.5.3",
+    "foundation-sites": "~6.1.1",
+    "howler.js": "howler#~1.1.27",
     "konami-js": "*",
-    "howler.js": "howler#~1.1.27"
+    "motion-ui": "~1.1.1"
   }
 }

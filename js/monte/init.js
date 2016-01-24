@@ -6,15 +6,24 @@
   window.monte = {
 
 
-    tag: 'M O N T E',
+    tag: 'm o n t e',
+
+    settings: {},
+
+    modules: {},
 
 
 
     utils: {
+
+      /**
+       * smooth scroll to a section of the page
+       * @return {N/A}
+       */
       smooth_scroll: function () {
         // smooth scroll - original source below
         // http://www.learningjquery.com/2007/10/improved-animated-scrolling-script-for-same-page-links
-        $('a[data-smooth-scroll]').click(function() {
+        $('a[data-smooth-scroll]').on('click.smooth_scroll', function() {
           if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
             var target = $(this.hash);
             target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
@@ -29,12 +38,17 @@
         });
       },
 
+      /**
+       * Easter egg
+       * @return {N/A}
+       */
       konami: function () {
+
         // file urls
         var mp3s = [
-          'misc/internet.mp3',
-          'misc/mario.mp3',
-          'misc/seinfeld.mp3'
+          '/misc/internet.mp3',
+          '/misc/mario.mp3',
+          '/misc/seinfeld.mp3'
         ];
 
         // load Howler
@@ -49,6 +63,7 @@
             urls: [mp3s[Math.floor(Math.random() * 3)]]
           }).play();
         }
+
       }
     },
 
@@ -56,6 +71,7 @@
 
     init: function() {
 
+      // say hello
       if (console !== undefined) console.log(this.tag);
 
       // add smooth scroll
@@ -63,6 +79,10 @@
 
       // konami /* play sound effect */
       var easter_egg = new Konami(this.utils.konami);
+
+      // ==================================================
+
+      // new things go here
 
     }
 

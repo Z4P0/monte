@@ -1,8 +1,44 @@
 // colors
-$white: #fafafa;
-$black: #2f2f2f;
-$grey: #ccc;
-$red: #b92d19;
+// foundation legacy colors
+$white       : #FFFFFF;
+$ghost       : #FAFAFA;
+$snow        : #F9F9F9;
+$vapor       : #F6F6F6;
+$white-smoke : #F5F5F5;
+$silver      : #EFEFEF;
+$smoke       : #EEEEEE;
+$gainsboro   : #DDDDDD;
+$iron        : #CCCCCC;
+$base        : #AAAAAA;
+$aluminum    : #999999;
+$jumbo       : #888888;
+$monsoon     : #777777;
+$steel       : #666666;
+$charcoal    : #555555;
+$tuatara     : #444444;
+$oil         : #333333;
+$jet         : #222222;
+$black       : #000000;
+
+// be sure to add the vars to the $theme_colors
+$red:         #b92d19;
+$blue:        #2390dc;
+$green:       #b2c936;
+
+$theme_colors: (
+  "red":         $red,
+  "blue":        $blue,
+  "green":       $green,
+);
+
+
 
 // type + weights
-// $family-name: 'Lato';
+$source-sans: 'Source Sans Pro';  // add to appropriate font stack and uncomment
+// $font-family-sans-serif: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+// $font-family-serif: Georgia, Cambria, "Times New Roman", Times, serif;
+
+// $light: 300;
+// $regular: 400;
+// $semi-bold: 600;
+// $bold: 700;

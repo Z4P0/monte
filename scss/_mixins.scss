@@ -25,7 +25,7 @@
 
 
 // this
-@mixin if_there_are($n) {
+@mixin if-there-are($n) {
   &:nth-last-child(n+#{$n}),
   &:nth-last-child(n+#{$n}) ~ * {
     @content;
@@ -40,7 +40,7 @@
   height: $size;
   width: $size;
   border-radius: $size;
-  background: $color;
+  background-color: $color;
 }
 
 
@@ -51,4 +51,28 @@
   transform: translateY(-50%);
   // for best results add this to the parent element:
   //    transform-style: preserve-3d;
+}
+
+
+// create .color, .color-bg, .color-border classes
+// credit: http://stackoverflow.com/questions/12842823/accessing-the-name-of-the-variable-rather-than-its-value
+@mixin create-color-classes($color-array) {
+  @each $name, $value in $color-array {
+    .#{$name}         { color: $value; }
+    .#{$name}-bg      { background-color: $value; }
+  }
+}
+
+
+@mixin page-section($size) {
+  padding-top: $size;
+  padding-bottom: $size;
+}
+
+
+@mixin placeholder-styles {
+  &::-webkit-input-placeholder {@content; }
+  &:-moz-placeholder {@content; }
+  &::-moz-placeholder {@content; }
+  &:-ms-input-placeholder {@content; }
 }

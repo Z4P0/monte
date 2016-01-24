@@ -15,10 +15,10 @@ module.exports = function(grunt) {
       'js/monte/init.js',
     ],
     js_vendor_files: [
-      'bower_components/modernizr/modernizr.js',
-      'bower_components/fastclick/lib/fastclick.js',
       'bower_components/jquery/dist/jquery.min.js',
-      'bower_components/foundation/js/foundation.min.js',
+      'bower_components/what-input/what-input.min.js',
+      'bower_components/foundation-sites/dist/foundation.min.js',
+      'bower_components/motion-ui/dist/motion-ui.min.js',
       'bower_components/howler.js/howler.min.js',
       'bower_components/konami-js/konami.js',
     ],
@@ -46,8 +46,7 @@ module.exports = function(grunt) {
   };
 
   // various config files
-  var stylelintConfig = grunt.file.readJSON('scss/.stylelintrc'),
-      autoprefixConfig = { browsers: 'last 2 versions' };
+  var autoprefixConfig = { browsers: 'last 2 versions' };
 
 
 
@@ -64,7 +63,6 @@ module.exports = function(grunt) {
     banner: '/*!\n' +
         ' * <%= pkg.name %> v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
         ' * Copyright 2014-<%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
-        ' * Licensed under <%= pkg.license.type %> (<%= pkg.license.url %>)\n' +
         ' */\n',
 
 
@@ -129,7 +127,6 @@ module.exports = function(grunt) {
         options: {
           map: true,
           processors: [
-            require('stylelint')(),
             require('autoprefixer')(autoprefixConfig)
           ]
         },
@@ -139,7 +136,6 @@ module.exports = function(grunt) {
         options: {
           map: false,
           processors: [
-            require('stylelint')(),
             require('autoprefixer')(autoprefixConfig),
             require('cssnano')()
           ]
@@ -265,9 +261,9 @@ module.exports = function(grunt) {
         files: ['<%= project.sass_dir %>*.scss','<%= project.sass_dir %>**/*.scss'],
         tasks: ['sass:build', 'postcss:build']
       },
-      jade: {
-        files: [ '<%= project.jade_dir %>*.jade', '<%= project.jade_dir %>**/*.jade'],
-        tasks: ['jade:build']
+      jade_pages: {
+        files: [ '<%= project.jade_dir %>*.jade'],
+        tasks: ['newer:jade:build']
       },
       js: {
         files: '<%= concat.build.src %>',
@@ -333,7 +329,7 @@ module.exports = function(grunt) {
     }
 
     // build + output to a directory
-    // default: ../../../demo
+    // default: ../monte-export
     grunt.task.run([
       'deploy',
       'copy',

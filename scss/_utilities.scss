@@ -1,0 +1,311 @@
+//============================================================
+// Generic utility classes for:
+// - padding (.page-section)
+// - margins
+//
+//
+// Table of Contents
+// 00. Foundation Colors
+// 01. Page Sections (Padding)
+// 02. Padding
+// 03. Margins
+// 04. Display
+// 05. Backgrounds
+// 06. Floats
+// 07. Alignment
+// 08. Icon Modifier Classes
+//
+// Naming conventions follow those of Foundation
+// ============================================================
+
+
+$column-gutter: rem-calc(30);
+
+// 00. Foundation Colors
+$foundation_colors: (
+  "white": $white,
+  "ghost": $ghost,
+  "snow": $snow,
+  "vapor": $vapor,
+  "white-smoke": $white-smoke,
+  "silver": $silver,
+  "smoke": $smoke,
+  "gainsboro": $gainsboro,
+  "iron": $iron,
+  "base": $base,
+  "aluminum": $aluminum,
+  "jumbo": $jumbo,
+  "monsoon": $monsoon,
+  "steel": $steel,
+  "charcoal": $charcoal,
+  "tuatara": $tuatara,
+  "oil": $oil,
+  "jet": $jet,
+  "black": $black,
+);
+@include create-color-classes($foundation_colors);
+
+
+
+
+// 01. Page Sections (Padding)
+// We use padding-top and padding-bottom because Foundation targets padding-left
+// and -right
+// ----------------------------------------
+.xtra-thin-page-section     { @include page-section($column-gutter * 0.25); }
+.thin-page-section          { @include page-section($column-gutter * 0.5); }
+.page-section               { @include page-section($column-gutter * 1); }
+.thick-page-section         { @include page-section($column-gutter * 1.5); }
+.xtra-thick-page-section    { @include page-section($column-gutter * 2); }
+
+@include mq(medium) {
+  .medium-xtra-thin-page-section     { @include page-section($column-gutter * 0.25); }
+  .medium-thin-page-section          { @include page-section($column-gutter * 0.5); }
+  .medium-page-section               { @include page-section($column-gutter * 1); }
+  .medium-thick-page-section         { @include page-section($column-gutter * 1.5); }
+  .medium-xtra-thick-page-section    { @include page-section($column-gutter * 2); }
+}
+
+@include mq(large) {
+  .large-xtra-thin-page-section     { @include page-section($column-gutter * 0.25); }
+  .large-thin-page-section          { @include page-section($column-gutter * 0.5); }
+  .large-page-section               { @include page-section($column-gutter * 1); }
+  .large-thick-page-section         { @include page-section($column-gutter * 1.5); }
+  .large-xtra-thick-page-section    { @include page-section($column-gutter * 2); }
+}
+
+
+
+// 02. Padding
+// ----------------------------------------
+.no-padding           { padding: 0 !important; }
+.no-padding-bottom    { padding-bottom: 0 !important; }
+.no-padding-top       { padding-top: 0 !important; }
+.no-padding-left      { padding-left: 0 !important; }
+.no-padding-right     { padding-right: 0 !important; }
+
+.padding-left         { padding-left: rem-calc(30) !important; }
+.padding-right        { padding-right: rem-calc(30) !important; }
+
+@include mq(medium) {
+  .medium-no-padding           { padding: 0 !important; }
+  .medium-no-padding-bottom    { padding-bottom: 0 !important; }
+  .medium-no-padding-top       { padding-top: 0 !important; }
+  .medium-no-padding-left      { padding-left: 0 !important; }
+  .medium-no-padding-right     { padding-right: 0 !important; }
+
+  .medium-padding-left         { padding-left: rem-calc(30) !important; }
+  .medium-padding-right        { padding-right: rem-calc(30) !important; }
+}
+
+
+
+
+
+// 03. Margins
+// ----------------------------------------
+// margin-bottom
+.xtra-thin-margin-bottom    { margin-bottom: $column-gutter * 0.25 !important; }
+.thin-margin-bottom         { margin-bottom: $column-gutter * 0.5 !important; }
+.margin-bottom              { margin-bottom: $column-gutter * 1 !important; }
+.thick-margin-bottom        { margin-bottom: $column-gutter * 1.5 !important; }
+.xtra-thick-margin-bottom   { margin-bottom: $column-gutter * 2 !important; }
+
+// margin-top
+.xtra-thin-margin-top       { margin-top: $column-gutter * 0.25 !important; }
+.thin-margin-top            { margin-top: $column-gutter * 0.5 !important; }
+.margin-top                 { margin-top: $column-gutter * 1 !important; }
+.thick-margin-top           { margin-top: $column-gutter * 1.5 !important; }
+.xtra-thick-margin-top      { margin-top: $column-gutter * 2 !important; }
+
+// margin-right
+.xtra-thin-margin-right     { margin-right: $column-gutter * 0.25 !important; }
+.thin-margin-right          { margin-right: $column-gutter * 0.5 !important; }
+.margin-right               { margin-right: $column-gutter * 1 !important; }
+.thick-margin-right         { margin-right: $column-gutter * 1.5 !important; }
+.xtra-thick-margin-right    { margin-right: $column-gutter * 2 !important; }
+
+// margin-left
+.xtra-thin-margin-left      { margin-left: $column-gutter * 0.25 !important; }
+.thin-margin-left           { margin-left: $column-gutter * 0.5 !important; }
+.margin-left                { margin-left: $column-gutter * 1 !important; }
+.thick-margin-left          { margin-left: $column-gutter * 1.5 !important; }
+.xtra-thick-margin-left     { margin-left: $column-gutter * 2 !important; }
+
+// no margin
+.no-margin                  { margin: 0 !important; }
+.no-margin-bottom           { margin-bottom: 0 !important; }
+.no-margin-top              { margin-top: 0 !important; }
+.no-margin-left             { margin-left: 0 !important; }
+.no-margin-right            { margin-right: 0 !important; }
+
+@include mq(medium) {
+  // margin-bottom
+  .medium-xtra-thin-margin-bottom    { margin-bottom: $column-gutter * 0.25 !important; }
+  .medium-thin-margin-bottom         { margin-bottom: $column-gutter * 0.5 !important; }
+  .medium-margin-bottom              { margin-bottom: $column-gutter * 1 !important; }
+  .medium-thick-margin-bottom        { margin-bottom: $column-gutter * 1.5 !important; }
+  .medium-xtra-thick-margin-bottom   { margin-bottom: $column-gutter * 2 !important; }
+
+  // margin-top
+  .medium-xtra-thin-margin-top       { margin-top: $column-gutter * 0.25 !important; }
+  .medium-thin-margin-top            { margin-top: $column-gutter * 0.5 !important; }
+  .medium-margin-top                 { margin-top: $column-gutter * 1 !important; }
+  .medium-thick-margin-top           { margin-top: $column-gutter * 1.5 !important; }
+  .medium-xtra-thick-margin-top      { margin-top: $column-gutter * 2 !important; }
+
+  // margin-right
+  .medium-xtra-thin-margin-left      { margin-left: $column-gutter * 0.25 !important; }
+  .medium-thin-margin-right          { margin-right: $column-gutter * 0.5 !important; }
+  .medium-margin-right               { margin-right: $column-gutter * 1 !important; }
+  .medium-thick-margin-right         { margin-right: $column-gutter * 1.5 !important; }
+  .medium-xtra-thick-margin-right    { margin-right: $column-gutter * 2 !important; }
+
+  // margin-left
+  .medium-xtra-thin-margin-left      { margin-left: $column-gutter * 0.25 !important; }
+  .medium-thin-margin-left           { margin-left: $column-gutter * 0.5 !important; }
+  .medium-margin-left                { margin-left: $column-gutter * 1 !important; }
+  .medium-thick-margin-left          { margin-left: $column-gutter * 1.5 !important; }
+  .medium-xtra-thick-margin-left     { margin-left: $column-gutter * 2 !important; }
+
+  // no margin
+  .medium-no-margin                  { margin: 0 !important; }
+  .medium-no-margin-bottom           { margin-bottom: 0 !important; }
+  .medium-no-margin-top              { margin-top: 0 !important; }
+  .medium-no-margin-left             { margin-left: 0 !important; }
+  .medium-no-margin-right            { margin-right: 0 !important; }
+}
+
+
+
+
+// 04. Display
+// ----------------------------------------
+.inline           { display: inline !important; }
+.inline-block     { display: inline-block !important; }
+.block            { display: block !important; }
+
+@include mq(medium) {
+  .medium-inline           { display: inline !important; }
+  .medium-inline-block     { display: inline-block !important; }
+  .medium-block            { display: block !important; }
+}
+
+
+
+
+// 05. Backgrounds
+// ----------------------------------------
+.bg-cover       { background-size: cover !important; }
+.bg-contain     { background-size: contain !important; }
+
+
+
+
+
+// 06. Floats
+// ----------------------------------------
+// we create .left and .right classes for .medium things
+@include mq(medium) {
+  .medium-left    { float: left; }
+  .medium-right   { float: right; }
+}
+
+
+
+
+
+// 07. Alignment
+// ----------------------------------------
+// for inline elements:
+.vam,
+.vertical-align {
+  vertical-align: middle;
+}
+.vat,
+.vertical-align-top,
+.vertical-top {
+  vertical-align: top;
+}
+
+// for block elements in layout:
+.vertical-center {
+  @include vertical-align;
+}
+
+
+
+.full {
+  width: 100%;
+}
+
+
+
+
+// 08. Icon Modifier Classes
+// ----------------------------------------
+// Default size:  16px
+.icon-2x { font-size: rem-calc(24); }
+.icon-3x { font-size: rem-calc(32); }
+.icon-4x { font-size: rem-calc(48); }
+.icon-5x { font-size: rem-calc(80); }
+.icon-6x { font-size: rem-calc(96); }
+
+@include mq(medium) {
+  .medium-icon-2x { font-size: rem-calc(24); }
+  .medium-icon-3x { font-size: rem-calc(32); }
+  .medium-icon-4x { font-size: rem-calc(48); }
+  .medium-icon-5x { font-size: rem-calc(80); }
+  .medium-icon-6x { font-size: rem-calc(96); }
+}
+
+@include mq(large) {
+  .large-icon-2x { font-size: rem-calc(24); }
+  .large-icon-3x { font-size: rem-calc(32); }
+  .large-icon-4x { font-size: rem-calc(48); }
+  .large-icon-5x { font-size: rem-calc(80); }
+  .large-icon-6x { font-size: rem-calc(96); }
+}
+
+
+
+
+.no-padding-block-grid {
+  margin: 0;
+  li {
+    padding: 0;
+  }
+}
+
+.no-padding-bottom-block-grid li { padding-bottom: 0; }
+@include mq(medium) {
+  .medium-no-padding-bottom-block-grid li { padding-bottom: 0; }
+}
+@include mq(large) {
+  .large-no-padding-bottom-block-grid li { padding-bottom: 0; }
+}
+
+
+.uppercase,
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+
+.no-border {
+  border: none;
+}
+
+.inline-list {
+  @include clearfix;
+  list-style: none;
+  margin-left: 0;
+  li {
+    float: left;
+    margin-right: rem-calc(15);
+    vertical-align: top;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
