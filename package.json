@@ -1,36 +1,57 @@
 {
   "name": "monte",
+  "version": "4.0.0",
   "description": "web project starter",
-  "author": "luis rosario [zapo]",
-  "homepage": "http://www.luisrosar.io",
-  "version": "3.0.0",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/aztec8/monte.git"
   },
-  "license": {
-    "type": "MIT",
-    "url": "https://github.com/aztec8/monte/blob/master/LICENSE"
-  },
   "scripts": {
-    "postinstall": "bower install && grunt build"
+    "html": "jade --pretty index.jade",
+    "html:watch": "jade --watch --pretty index.jade",
+    "sass": "node-sass --include-path node_modules/foundation-sites/scss style/scss/main.scss style/main.css",
+    "sass:watch": "node-sass --watch --recursive --source-map true --include-path node_modules/foundation-sites/scss style/scss --output style",
+    "autoprefix": "postcss --use autoprefixer -o style/main.css style/main.css",
+    "mqpack": "postcss --use css-mqpacker -o style/main.css style/main.css",
+    "css": "npm run sass && npm run mqpack && npm run autoprefix",
+    "js": "browserify scripts/init.js -o scripts/main.js",
+    "js:debug": "browserify scripts/init.js -o scripts/main.js --debug",
+    "js:watch": "watchify scripts/init.js -o scripts/main.js --debug",
+    "watch": "npm run html:watch & npm run sass:watch & npm run js:watch",
+    "build": "npm run html & npm run css & npm run js",
+    "server": "http-server ./ -c-1 -o",
+    "live-reload": "live-server --port=4040",
+    "servers": "npm run server & npm run live-reload",
+    "dev": "npm run watch & npm run servers",
+    "dev:server": "npm run watch & npm run server",
+    "minify:css": "postcss --use cssnano -o style/main.min.css style/main.css",
+    "minify:js": "uglifyjs scripts/main.js --compress --output scripts/main.min.js",
+    "minify": "npm run minify:css & npm run minify:js",
+    "export:html": "jade index.jade --out export/",
+    "export:css": "postcss --use css-mqpacker --use autoprefixer --use cssnano -o export/style/main.css style/main.css",
+    "export:js": "npm run js && npm run minify:js && mv scripts/main.min.js export/scripts/main.js",
+    "export:assets": "cp -r images/ export/images & cp -r misc/ export/misc & cp favicon.ico export/ & cp apple-touch-icon.png export/",
+    "preexport": "mkdir export && mkdir export/style export/scripts",
+    "export": "npm run export:html && npm run export:css && npm run export:js && npm run export:assets",
+    "postinstall": "npm run build"
   },
-  "devDependencies" : {
-    "autoprefixer": "^6.3.1",
-    "bower": "^1.7.2",
-    "cssnano": "^3.4.0",
-    "glob": "^5.0.15",
-    "grunt": "^0.4.5",
-    "grunt-banner": "^0.6.0",
-    "grunt-contrib-concat": "^0.5.1",
-    "grunt-contrib-copy": "^0.8.2",
-    "grunt-contrib-jade": "^0.15.0",
-    "grunt-contrib-uglify": "^0.9.2",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-newer": "^1.1.1",
-    "grunt-postcss": "^0.6.0",
-    "grunt-sass": "^1.1.0",
-    "load-grunt-tasks": "^3.4.0",
-    "time-grunt": "^1.3.0"
+  "author": "zapo (http://luisrosar.io)",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^6.3.2",
+    "browserify": "^13.0.0",
+    "css-mqpacker": "^4.0.0",
+    "cssnano": "^3.5.2",
+    "http-server": "^0.8.5",
+    "jade": "^1.11.0",
+    "live-server": "^0.9.1",
+    "node-sass": "^3.4.2",
+    "postcss-cli": "^2.5.1",
+    "uglify-js": "^2.6.1",
+    "watchify": "^3.7.0"
+  },
+  "dependencies": {
+    "foundation-sites": "^6.1.2"
   }
 }

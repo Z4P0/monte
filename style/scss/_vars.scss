@@ -1,4 +1,15 @@
 // colors
+// be sure to add the vars to the $theme_colors
+$red        : #b92d19;
+$blue       : #2390dc;
+$green      : #b2c936;
+
+$theme_colors: (
+  "red":         $red,
+  "blue":        $blue,
+  "green":       $green,
+);
+
 // foundation legacy colors
 $white       : #FFFFFF;
 $ghost       : #FAFAFA;
@@ -20,18 +31,28 @@ $oil         : #333333;
 $jet         : #222222;
 $black       : #000000;
 
-// be sure to add the vars to the $theme_colors
-$red:         #b92d19;
-$blue:        #2390dc;
-$green:       #b2c936;
 
-$theme_colors: (
-  "red":         $red,
-  "blue":        $blue,
-  "green":       $green,
+$foundation_colors: (
+  "white": $white,
+  "ghost": $ghost,
+  "snow": $snow,
+  "vapor": $vapor,
+  "white-smoke": $white-smoke,
+  "silver": $silver,
+  "smoke": $smoke,
+  "gainsboro": $gainsboro,
+  "iron": $iron,
+  "base": $base,
+  "aluminum": $aluminum,
+  "jumbo": $jumbo,
+  "monsoon": $monsoon,
+  "steel": $steel,
+  "charcoal": $charcoal,
+  "tuatara": $tuatara,
+  "oil": $oil,
+  "jet": $jet,
+  "black": $black,
 );
-
-
 
 // type + weights
 $source-sans: 'Source Sans Pro';  // add to appropriate font stack and uncomment

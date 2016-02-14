@@ -1,0 +1,81 @@
+// conditional css
+@mixin if-there-are($n) {
+  &:nth-last-child(n+#{$n}),
+  &:nth-last-child(n+#{$n}) ~ * {
+    @content;
+  }
+}
+
+
+// css circle
+@mixin circle($size, $color, $alignment:middle) {
+  display: inline-block;
+  vertical-align: $alignment;
+  height: $size;
+  width: $size;
+  border-radius: $size;
+  background-color: $color;
+}
+
+
+// vertical align
+@mixin vertical-align($position: relative) {
+  position: $position;
+  top: 50%;
+  transform: translateY(-50%);
+  // for best results add this to the parent element:
+  //    transform-style: preserve-3d;
+}
+
+
+// create .color, .color-bg, .color-border classes
+// credit: http://stackoverflow.com/questions/12842823/accessing-the-name-of-the-variable-rather-than-its-value
+@mixin create-color-classes($color-array) {
+  @each $name, $value in $color-array {
+    .#{$name}         { color: $value; }
+    .#{$name}-bg      { background-color: $value; }
+  }
+}
+
+// padding-top, padding-bottom
+@mixin page-section($size) {
+  padding-top: $size;
+  padding-bottom: $size;
+}
+
+
+@mixin placeholder-styles {
+  &::-webkit-input-placeholder {@content; }
+  &:-moz-placeholder {@content; }
+  &::-moz-placeholder {@content; }
+  &:-ms-input-placeholder {@content; }
+}
+
+
+@mixin utilify($className, $cssRules, $mqs: ('medium', 'large')) {
+  .xtra-thin-#{$className}     {@each $rule, $value in $cssRules { #{$rule}: $value * 0.25; } }
+  .thin-#{$className}          {@each $rule, $value in $cssRules { #{$rule}: $value * 0.5; } }
+  .#{$className}               {@each $rule, $value in $cssRules { #{$rule}: $value; } }
+  .thick-#{$className}         {@each $rule, $value in $cssRules { #{$rule}: $value * 1.5; } }
+  .xtra-thick-#{$className}    {@each $rule, $value in $cssRules { #{$rule}: $value * 2; } }
+
+  @each $mq in $mqs {
+    @include breakpoint($mq) {
+      .#{$mq}-xtra-thin-#{$className}     {@each $rule, $value in $cssRules { #{$rule}: $value * 0.25; } }
+      .#{$mq}-thin-#{$className}          {@each $rule, $value in $cssRules { #{$rule}: $value * 0.5; } }
+      .#{$mq}-#{$className}               {@each $rule, $value in $cssRules { #{$rule}: $value; } }
+      .#{$mq}-thick-#{$className}         {@each $rule, $value in $cssRules { #{$rule}: $value * 1.5; } }
+      .#{$mq}-xtra-thick-#{$className}    {@each $rule, $value in $cssRules { #{$rule}: $value * 2; } }
+    }
+  }
+}
+
+
+@mixin querify($className, $cssRules, $mqs: ('medium', 'large')) {
+  .#{$className} {@each $rule, $value in $cssRules { #{$rule}: $value; } }
+  @each $mq in $mqs {
+    @include breakpoint($mq) {
+      .#{$mq}-#{$className} {@each $rule, $value in $cssRules { #{$rule}: $value; } }
+    }
+  }
+}
