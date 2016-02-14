@@ -52,6 +52,21 @@
     "watchify": "^3.7.0"
   },
   "dependencies": {
-    "foundation-sites": "^6.1.2"
+    "browserify-shim": "^3.8.12",
+    "foundation-sites": "^6.1.2",
+    "jquery": "^2.2.0"
+  },
+  "browser": {
+    "jquery": "./node_modules/jquery/dist/jquery.js",
+    "foundation": "./node_modules/foundation-sites/dist/foundation.js"
+  },
+  "browserify-shim": {
+    "jquery": "$",
+    "foundation": "foundation"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
   }
 }
