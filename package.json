@@ -53,16 +53,19 @@
   },
   "dependencies": {
     "browserify-shim": "^3.8.12",
+    "cheet.js": "^0.3.3",
     "foundation-sites": "^6.1.2",
     "jquery": "^2.2.0"
   },
   "browser": {
     "jquery": "./node_modules/jquery/dist/jquery.js",
-    "foundation": "./node_modules/foundation-sites/dist/foundation.js"
+    "foundation": "./node_modules/foundation-sites/dist/foundation.js",
+    "cheet": "./node_modules/cheet.js/cheet.js"
   },
   "browserify-shim": {
     "jquery": "$",
-    "foundation": "foundation"
+    "foundation": "foundation",
+    "cheet": "cheet"
   },
   "browserify": {
     "transform": [

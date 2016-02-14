@@ -1,6 +1,7 @@
 var Monte = require('./monte');
 var $ = require('jquery');
 var foundation = require('foundation');
+var cheet = require('cheet');
 
 // initialize the things
 $(document).ready(function () {
@@ -16,9 +17,7 @@ $(document).ready(function () {
 
   /**
    * smooth scroll to a section of the page
-   * @return false
-   *
-   * smooth scroll - original source below
+   * original source below
    * http://www.learningjquery.com/2007/10/improved-animated-scrolling-script-for-same-page-links
   */
   $('a[data-smooth-scroll]').on('click.smooth_scroll', function() {
@@ -34,5 +33,8 @@ $(document).ready(function () {
       }
     }
   });
+
+  // konami
+  cheet('↑ ↑ ↓ ↓ ← → ← → b a', function () { alert('Voilà!'); });
 });
 
