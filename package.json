@@ -10,9 +10,9 @@
   "scripts": {
     "html": "jade --pretty index.jade",
     "html:watch": "jade --watch --pretty index.jade",
-    "sass": "node-sass --include-path node_modules/foundation-sites/scss style/scss/main.scss style/main.css",
-    "sass:watch": "node-sass --watch --recursive --source-map true --include-path node_modules/foundation-sites/scss style/scss --output style",
-    "css": "npm run sass && postcss --use css-mqpacker --use autoprefixer -o style/main.css style/main.css",
+    "sass": "node-sass --include-path node_modules/foundation-sites/scss scss/styles.scss css/styles.css",
+    "sass:watch": "node-sass --watch --recursive --source-map true --include-path node_modules/foundation-sites/scss scss --output css",
+    "css": "npm run sass && postcss --use css-mqpacker --use autoprefixer -o css/styles.css css/styles.css",
     "js": "browserify scripts/init.js -o scripts/main.js",
     "js:debug": "browserify scripts/init.js -o scripts/main.js --debug",
     "js:watch": "watchify scripts/init.js -o scripts/main.js --debug",
@@ -23,11 +23,11 @@
     "servers": "npm run server & npm run live-reload",
     "dev": "npm run watch & npm run servers",
     "dev:server": "npm run watch & npm run server",
-    "minify:css": "postcss --use cssnano -o style/main.min.css style/main.css",
+    "minify:css": "postcss --use cssnano -o css/styles.min.css css/styles.css",
     "minify:js": "uglifyjs scripts/main.js --compress --output scripts/main.min.js",
     "minify": "npm run minify:css & npm run minify:js",
     "export:html": "jade index.jade --out export/",
-    "export:css": "postcss --use css-mqpacker --use autoprefixer --use cssnano -o export/style/main.css style/main.css",
+    "export:css": "postcss --use css-mqpacker --use autoprefixer --use cssnano -o export/css/styles.css css/styles.css",
     "export:js": "npm run js && npm run minify:js && mv scripts/main.min.js export/scripts/main.js",
     "export:assets": "cp -r images/ export/images & cp -r misc/ export/misc & cp favicon.ico export/ & cp apple-touch-icon.png export/",
     "preexport": "mkdir export && mkdir export/style export/scripts",
@@ -56,9 +56,9 @@
     "jquery": "^2.2.0"
   },
   "browser": {
-    "jquery": "./node_modules/jquery/dist/jquery.js",
-    "foundation": "./node_modules/foundation-sites/dist/foundation.js",
-    "cheet": "./node_modules/cheet.js/cheet.js"
+    "jquery": "./node_modules/jquery/dist/jquery.min.js",
+    "foundation": "./node_modules/foundation-sites/dist/foundation.min.js",
+    "cheet": "./node_modules/cheet.js/cheet.min.js"
   },
   "browserify-shim": {
     "jquery": "$",
