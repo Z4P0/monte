@@ -1263,9 +1263,6 @@ kbd {
   color: #FFFFFF;
   text-shadow: none; }
 
-.test {
-  background: #000; }
-
 @media screen and (min-width: 40em) {
   .row .row {
     margin-left: -0.9375rem;
